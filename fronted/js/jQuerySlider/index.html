@@ -1,0 +1,977 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="zh" class="no-js">
+<!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>jQuery UI增强功能的Slider滑块插件</title>
+<meta name="description" content="Take your jQuery UI Slider to the next level; Pips and Floats for sexy sliders.">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+
+<!-- modernizer -->
+<script src="js/modernizr.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/default.css">
+<!-- jquery ui -->
+<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/jquery-ui-1.11.0.css">
+
+<!-- slider -->
+<link rel="stylesheet" href="css/jquery-ui-slider-pips.min.css" />
+
+<!-- app -->
+<link rel="stylesheet" href="css/app.min.css" />
+
+</head>
+
+<body>
+<a href="#" class="sidebar__toggle"> <i class="icon icon--menu"></i> <i class="icon icon--cross"></i> </a>
+<nav class="sidebar">
+  <h2 class="sidebar__title">Navigation</h2>
+  <ul class="sidebar__nav">
+    <li class="sidebar__item"><a href="#examples">Examples</a>
+      <ul class="sidebar__nav">
+        <li class="sidebar__item"><a href="#example-show-all-labels">Show All Labels</a></li>
+        <li class="sidebar__item"><a href="#example-hide-labels-and-pips">Hide Labels &amp; Pips</a></li>
+        <li class="sidebar__item"><a href="#example-only-pips">Only Show Pips</a></li>
+        <li class="sidebar__item"><a href="#example-prefix-suffix">Prefix/Suffix</a></li>
+        <li class="sidebar__item"><a href="#example-custom-labels">Custom Labels</a></li>
+        <li class="sidebar__item"><a href="#example-hanzi-labels">More Custom Labels</a></li>
+        <li class="sidebar__item"><a href="#example-steps">Steps</a>
+          <ul class="sidebar__nav">
+            <li class="sidebar__item"><a href="#example-steps-fivepercent">5% Interval</a></li>
+            <li class="sidebar__item"><a href="#example-steps-stacking">Multiplicative Steps</a></li>
+            <li class="sidebar__item"><a href="#example-steps-table">Step Table</a></li>
+          </ul>
+        </li>
+        <li class="sidebar__item"><a href="#example-vertical">Vertical Sliders</a></li>
+      </ul>
+    </li>
+    <li class="sidebar__item"><a href="#styling">Styling</a>
+      <ul class="sidebar__nav">
+        <li class="sidebar__item"><a href="#styling-circles">Circles</a></li>
+        <li class="sidebar__item"><a href="#styling-scale">Scale</a></li>
+        <li class="sidebar__item"><a href="#styling-emoji">Emoji</a></li>
+      </ul>
+    </li>
+    <li class="sidebar__item"><a href="#browser-support">Browser Support</a>
+  </ul>
+</nav>
+<section class="content">
+  <section class="content__main">
+    <section class="block" id="example">
+      <dl class="tabs code" data-tab>
+        <dd class="active"><a href="#example1-result" title="result">Html</a></dd>
+        <dd><a href="#example1-html" title="html">&lt;/&gt;</a></dd>
+        <dd><a href="#example1-js" title="jquery">($)</a></dd>
+      </dl>
+      <div class="tabs-content">
+        <div class="content active" id="example1-result">
+          <div class="row">
+            <div class="large-6 small-12 columns">
+              <p>go from this...</p>
+              <div id="example-slider"></div>
+            </div>
+            <div class="large-6 small-12 columns">
+              <p>to this!</p>
+              <div id="example-slider-pips"></div>
+            </div>
+          </div>
+        </div>
+        <div class="content" id="example1-html">
+          <pre data-lang="html">
+                                &lt;div class="slider"&gt;&lt;/div&gt;
+                            </pre>
+        </div>
+        <div class="content" id="example1-js">
+          <pre data-lang="js">
+                                $(".slider").slider().slider("pips").slider("float");
+                            </pre>
+        </div>
+      </div>
+    </section>
+    <section class="block" id="examples">
+      <h2> <a href="#examples" class="anchor"> Examples </a> </h2>
+      <section class="sub-block" id="example-show-all-labels">
+        <h3> <a href="#example-show-all-labels" class="anchor"> Show All Labels </a> </h3>
+        <p>By default we only show the labels for the <code>first</code> and <code>last</code> points, shown below is
+          an example of <strong>labels being applied to all pips.</strong></p>
+        <dl class="tabs code" data-tab>
+          <dd class="active"><a href="#show-rest-slider-result" title="result">Html</a></dd>
+          <dd><a href="#show-rest-slider-html" title="html">&lt;/&gt;</a></dd>
+          <dd><a href="#show-rest-slider-js" title="jquery">($)</a></dd>
+        </dl>
+        <div class="tabs-content">
+          <div class="content active" id="show-rest-slider-result">
+            <div id="show-rest-slider"></div>
+          </div>
+          <div class="content" id="show-rest-slider-html">
+            <pre data-lang="html">
+                                    &lt;div class="slider"&gt;&lt;/div&gt;
+                                </pre>
+          </div>
+          <div class="content" id="show-rest-slider-js">
+            <pre data-lang="js">
+                                    $(".slider")
+                                        .slider({
+                                            max: 12
+                                        })
+                                        .slider("pips", {
+                                            rest: "label"
+                                        });
+                                </pre>
+          </div>
+        </div>
+      </section>
+      <section class="sub-block" id="example-hide-labels-and-pips">
+        <h3> <a href="#example-hide-labels-and-pips" class="anchor"> Hide Labels &amp; Pips </a> </h3>
+        <p>It is possible to hide all the pips if we want a slider to show just the <code>min</code>/<code>max</code> values.</p>
+        <dl class="tabs code" data-tab>
+          <dd class="active"><a href="#hide-rest-slider-result" title="result">Html</a></dd>
+          <dd><a href="#hide-rest-slider-html" title="html">&lt;/&gt;</a></dd>
+          <dd><a href="#hide-rest-slider-js" title="jquery">($)</a></dd>
+        </dl>
+        <div class="tabs-content">
+          <div class="content active" id="hide-rest-slider-result">
+            <div id="hide-rest-slider"></div>
+          </div>
+          <div class="content" id="hide-rest-slider-html">
+            <pre data-lang="html">
+                                    &lt;div class="slider"&gt;&lt;/div&gt;
+                                </pre>
+          </div>
+          <div class="content" id="hide-rest-slider-js">
+            <pre data-lang="js">
+                                    $(".slider")
+                                        .slider({
+                                            max: 12,
+                                            range: true,
+                                            values: [5, 15]
+                                        })
+                                        .slider("pips", {
+                                            rest: false
+                                        });
+                                </pre>
+          </div>
+        </div>
+      </section>
+      <section class="sub-block" id="example-only-pips">
+        <h3> <a href="#example-only-pips" class="anchor"> Only Show Pips </a> </h3>
+        <p>Instead of having the values shown for the <code>first</code>/<code>last</code> point, 
+          we could only show <code>pips</code>. This might be good when we just need to show 
+          the user how many options they have without showing explicit values.</p>
+        <dl class="tabs code" data-tab>
+          <dd class="active"><a href="#show-only-pips-slider-result" title="result">Html</a></dd>
+          <dd><a href="#show-only-pips-slider-html" title="html">&lt;/&gt;</a></dd>
+          <dd><a href="#show-only-pips-slider-js" title="jquery">($)</a></dd>
+        </dl>
+        <div class="tabs-content">
+          <div class="content active" id="show-only-pips-slider-result">
+            <div id="show-only-pips-slider"></div>
+          </div>
+          <div class="content" id="show-only-pips-slider-html">
+            <pre data-lang="html">
+                                    &lt;div class="slider"&gt;&lt;/div&gt;
+                                </pre>
+          </div>
+          <div class="content" id="show-only-pips-slider-js">
+            <pre data-lang="js">
+                                    $(".slider")
+                                        .slider({
+                                            max: 30
+                                        })
+                                        .slider("pips", {
+                                            first: "pip",
+                                            last: "pip"
+                                        });
+                                </pre>
+          </div>
+        </div>
+      </section>
+      <section class="sub-block" id="example-prefix-suffix">
+        <h3> <a href="#example-prefix-suffix" class="anchor"> Prefix / Suffix </a> </h3>
+        <p>If we need to add some content/context to our values, we can specify a <code>prefix</code> and/or <code>suffix</code> to spice things up. It would not be possible with css <code>:before</code> and <code>:after</code> because we already use these psuedo-elements for styling.</p>
+        <dl class="tabs code" data-tab>
+          <dd class="active"><a href="#prefix-suffix-slider-result" title="result">Html</a></dd>
+          <dd><a href="#prefix-suffix-slider-html" title="html">&lt;/&gt;</a></dd>
+          <dd><a href="#prefix-suffix-slider-css" title="css">{;}</a></dd>
+          <dd><a href="#prefix-suffix-slider-js" title="jquery">($)</a></dd>
+        </dl>
+        <div class="tabs-content">
+          <div class="content active" id="prefix-suffix-slider-result">
+            <div id="prefix-suffix-slider"></div>
+          </div>
+          <div class="content" id="prefix-suffix-slider-html">
+            <pre data-lang="html">
+                                    &lt;div class="slider"&gt;&lt;/div&gt;
+                                </pre>
+          </div>
+          <div class="content" id="prefix-suffix-slider-css">
+            <pre data-lang="css">
+                                    /* Because of the prefix/suffix we need to shift the labels left
+                                        a little bit so they are still aligned centrally. */
+                    
+                                    #prefix-suffix-slider .ui-slider-label {
+                                      margin-left: -1.75em; 
+                                    }
+                                    
+                                    /* We also use a media query so the pips do not crowd-over each other
+                                        when we get to a small screen size */
+                    
+                                    @media screen and (max-width: 1040px) {
+                                        #prefix-suffix-slider .ui-slider-pip:nth-of-type(2n+1) .ui-slider-label {
+                                            display: none; 
+                                        } 
+                                    }
+                                </pre>
+          </div>
+          <div class="content" id="prefix-suffix-slider-js">
+            <pre data-lang="js">
+                                    $(".slider")
+                                        .slider({ 
+                                            min: 0, 
+                                            max: 100, 
+                                            value: 50, 
+                                            step: 10 
+                                        })
+                                        .slider("pips", {
+                                            rest: "label",
+                                            prefix: "&dollar;",
+                                            suffix: ".00&cent;"
+                                        });
+                                </pre>
+          </div>
+        </div>
+        <p><span class="round label tip"></span> Check out the <a href="#example-prefix-suffix" data-active-tab="#prefix-suffix-slider-css">CSS</a> &amp; <a href="#example-prefix-suffix" data-active-tab="#prefix-suffix-slider-js">JS</a> code, 
+          and also try resizing the browser to see the slider respond.</p>
+      </section>
+      <section class="sub-block" id="example-custom-labels">
+        <h3> <a href="#example-custom-labels" class="anchor"> Custom Labels </a> </h3>
+        <p>It's possible with <code>rest: "label"</code> to set some custom <code>labels</code> to the slider instead of the
+          default values. It's important to note here that the slider will still return its integer value when <code>$(".slider").slider("value");</code> is called.</p>
+        <dl class="tabs code" data-tab>
+          <dd class="active"><a href="#custom-labels-slider-result" title="result">Html</a></dd>
+          <dd><a href="#custom-labels-slider-html" title="html">&lt;/&gt;</a></dd>
+          <dd><a href="#custom-labels-slider-js" title="jquery">($)</a></dd>
+        </dl>
+        <div class="tabs-content">
+          <div class="content active" id="custom-labels-slider-result">
+            <p id="custom-labels-output" class="panel callout radius text-center"></p>
+            <div id="custom-labels-slider"></div>
+          </div>
+          <div class="content" id="custom-labels-slider-html">
+            <pre data-lang="html">
+                                    &lt;div class="slider"&gt;&lt;/div&gt;
+                                </pre>
+          </div>
+          <div class="content" id="custom-labels-slider-js">
+            <pre data-lang="js">
+                                    // set up an array to hold the months
+                                    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                                    // lets be fancy for the demo and select the current month.
+                                    var activeMonth = new Date().getMonth();
+                                    
+                                    $(".slider")
+                    
+                                        // activate the slider with options
+                                        .slider({ 
+                                            min: 0, 
+                                            max: months.length-1, 
+                                            value: activeMonth 
+                                        })
+                    
+                                        // add pips with the labels set to "months"
+                                        .slider("pips", {
+                                            rest: "label",
+                                            labels: months
+                                        })
+                    
+                                        // and whenever the slider changes, lets echo out the month
+                                        .on("slidechange", function(e,ui) {
+                                            $("#labels-months-output").text( "You selected " + months[ui.value] + " (" + ui.value + ")");
+                                        });
+                                </pre>
+          </div>
+        </div>
+      </section>
+      <section class="sub-block" id="example-hanzi-labels">
+        <h3> <a href="#example-hanzi-labels" class="anchor"> More Custom Labels </a> </h3>
+        <p>Here's another example using <code>labels</code> except here we replace roman numbers with
+          the Chinese/Hanzi equivalent.</p>
+        <dl class="tabs code" data-tab>
+          <dd class="active"><a href="#hanzi-labels-slider-result" title="result">Html</a></dd>
+          <dd><a href="#hanzi-labels-slider-html" title="html">&lt;/&gt;</a></dd>
+          <dd><a href="#hanzi-labels-slider-css" title="css">{;}</a></dd>
+          <dd><a href="#hanzi-labels-slider-js" title="jquery">($)</a></dd>
+        </dl>
+        <div class="tabs-content">
+          <div class="content active" id="hanzi-labels-slider-result">
+            <div id="hanzi-labels-slider"></div>
+          </div>
+          <div class="content" id="hanzi-labels-slider-html">
+            <pre data-lang="html">
+                                    &lt;div class="slider"&gt;&lt;/div&gt;
+                                </pre>
+          </div>
+          <div class="content" id="hanzi-labels-slider-css">
+            <pre data-lang="css">
+                                    #hanzi-labels-slider {
+                                        font-family: "SimHei", "Hei", sans-serif;
+                                    }
+                    
+                                    #hanzi-labels-slider .ui-sliper-pip {
+                                        font-size: 1.4em; 
+                                    }
+                                      
+                                    #hanzi-labels-slider .ui-slider-handle .ui-slider-tip {
+                                        font-size: 1.4em;
+                                        width: 42px;
+                                        margin-left: -22px;
+                                        height: 33px;
+                                        line-height: 30px;
+                                        top: -40px;
+                                        background: #434d5a;
+                                        border-color: #434d5a;
+                                        color: white; 
+                                    }
+                                    
+                                    #hanzi-labels-slider .ui-slider-handle .ui-slider-tip:before, 
+                                    #hanzi-labels-slider .ui-slider-handle .ui-slider-tip:after {
+                                        border-top-color: #434d5a; 
+                                    }
+                                </pre>
+          </div>
+          <div class="content" id="hanzi-labels-slider-js">
+            <pre data-lang="js">
+                                    var hanzi = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十"];
+                    
+                                    $("#hanzi-labels-slider")
+                    
+                                        .slider({ 
+                                            min: 0, 
+                                            max: hanzi.length-1, 
+                                            value: 3 
+                                        })
+                    
+                                        .slider("pips", {
+                                            rest: "label",
+                                            labels: hanzi
+                                        })
+                    
+                                        .slider("float", {
+                                            labels: hanzi
+                                        });
+                                </pre>
+          </div>
+        </div>
+      </section>
+      <section class="sub-block" id="example-steps">
+        <h3> <a href="#example-steps" class="anchor"> Steps </a> </h3>
+        <p>Steps can be a little complicated. The default slider allows us to skip along the slider 
+          in a pattern. eg: <code>0, 20, 40...</code><br>
+          Steps are hard-wired in to the slider and so the <code>pips</code> and <code>labels</code> will match the <code>step</code> value.</p>
+        <dl class="tabs code" data-tab>
+          <dd class="active"><a href="#steps-default-slider-result" title="result">Html</a></dd>
+          <dd><a href="#steps-default-slider-html" title="html">&lt;/&gt;</a></dd>
+          <dd><a href="#steps-default-slider-js" title="jquery">($)</a></dd>
+        </dl>
+        <div class="tabs-content">
+          <div class="content active" id="steps-default-slider-result">
+            <div id="steps-default-slider"></div>
+          </div>
+          <div class="content" id="steps-default-slider-html">
+            <pre data-lang="html">
+                                    &lt;div class="slider"&gt;&lt;/div&gt;
+                                </pre>
+          </div>
+          <div class="content" id="steps-default-slider-js">
+            <pre data-lang="js">
+                                    $(".slider")
+                    
+                                        .slider({ 
+                                            min: 0, 
+                                            max: 100, 
+                                            step: 20 
+                                        })
+                    
+                                        .slider("pips", {
+                                            rest: "label"
+                                        });
+                                </pre>
+          </div>
+        </div>
+        <h4> <a href="#example-steps-fivepercent" id="example-steps-fivepercent" class="anchor"> 5% Interval </a> </h4>
+        <p>If we have more than 100 items on the slider <code>(max - min >= 100)</code>, then the <code>.slider("pips");</code> method will only show the <code>pips</code> at a 5% interval. 
+          This is because we really do not want to be adding thousands of dom elements to the page for the <code>pips</code>.
+          It can have a dramatic effect on performance for the user. Additionally every <code>pip</code> requires 
+          it's own pixel on the screen... so if we had more than 1000 <code>pips</code>, we would need a 
+          screen size of at least 1000px wide.</p>
+        <dl class="tabs code" data-tab>
+          <dd class="active"><a href="#steps-fivepercent-slider-result" title="result">Html</a></dd>
+          <dd><a href="#steps-fivepercent-slider-html" title="html">&lt;/&gt;</a></dd>
+          <dd><a href="#steps-fivepercent-slider-css" title="css">{;}</a></dd>
+          <dd><a href="#steps-fivepercent-slider-js" title="jquery">($)</a></dd>
+        </dl>
+        <div class="tabs-content">
+          <div class="content active" id="steps-fivepercent-slider-result">
+            <div id="steps-fivepercent-slider"></div>
+          </div>
+          <div class="content" id="steps-fivepercent-slider-html">
+            <pre data-lang="html">
+                                    &lt;div class="slider"&gt;&lt;/div&gt;
+                                </pre>
+          </div>
+          <div class="content" id="steps-fivepercent-slider-css">
+            <pre data-lang="css">
+                                    #steps-fivepercent-slider .ui-slider-tip {
+                                        visibility: visible;
+                                        opacity: 1;
+                                        top: -30px;
+                                    }
+                                </pre>
+          </div>
+          <div class="content" id="steps-fivepercent-slider-js">
+            <pre data-lang="js">
+                                    $(".slider")
+                        
+                                        .slider({ 
+                                            min: 0, 
+                                            max: 1000, 
+                                            range: true, 
+                                            values: [200, 800] 
+                                        })
+                        
+                                        .slider("pips", {
+                                            rest: "label"
+                                        })
+                        
+                                        .slider("float");
+                        
+                                </pre>
+          </div>
+        </div>
+        <h4> <a href="#example-steps-stacking" id="example-steps-stacking" class="anchor"> Multiplicative Steps </a> </h4>
+        <p>When a slider has the <code>.slider("pips");</code> method applied to it, the <code>pips</code> method may also take a <code>step</code> option to allow additional control over the way <code>pips</code> are stepped visually. This option has no effect on the slider's functionality.</p>
+        <p>The <code>step</code> value on the <code>.slider("pips");</code> method is multiplicative; meaning it will
+          only show every <code>nth</code> step that exists from the main <code>.slider();</code> method.</p>
+        <dl class="tabs code" data-tab>
+          <dd class="active"><a href="#steps-stacking-slider-result" title="result">Html</a></dd>
+          <dd><a href="#steps-stacking-slider-html" title="html">&lt;/&gt;</a></dd>
+          <dd><a href="#steps-stacking-slider-js" title="jquery">($)</a></dd>
+        </dl>
+        <div class="tabs-content">
+          <div class="content active" id="steps-stacking-slider-result">
+            <div id="steps-stacking-slider"></div>
+          </div>
+          <div class="content" id="steps-stacking-slider-html">
+            <pre data-lang="html">
+                                    &lt;div class="slider"&gt;&lt;/div&gt;
+                                </pre>
+          </div>
+          <div class="content" id="steps-stacking-slider-js">
+            <pre data-lang="js">
+                                    $(".slider")
+                        
+                                    .slider({ 
+                                        min: 0, 
+                                        max: 1000, 
+                                        step: 100 
+                                    })
+                        
+                                    .slider("pips", {
+                                        rest: "label",
+                                        step: 2
+                                    })
+                        
+                                    .slider("float");
+                        
+                                </pre>
+          </div>
+        </div>
+        <h4> <a href="#example-steps-table" id="example-steps-table" class="anchor"> Step Table </a> </h4>
+        <p>To further explain how the multiplicative <code>step</code> option works there is a table below 
+          showing the resulting sliders with a selection of different <code>step</code> options.</p>
+        <div class="table-wrapper">
+          <table class="step-table">
+            <tr>
+              <th scope="col"><code>{ step: }</code></th>
+              <th scope="col"><code>"pips", { step: }</code></th>
+              <th scope="col">Result</th>
+            </tr>
+            <tr>
+              <td scope="row"><code>1</code> (default)</td>
+              <td><code>1</code> (default)</td>
+              <td><div class="step-table-slider-11"></div></td>
+            </tr>
+            <tr>
+              <td scope="row"><code>5</code></td>
+              <td><code>1</code></td>
+              <td><div class="step-table-slider-51"></div></td>
+            </tr>
+            <tr>
+              <td scope="row"><code>10</code></td>
+              <td><code>1</code></td>
+              <td><div class="step-table-slider-101"></div></td>
+            </tr>
+            <tr>
+              <td scope="row"><code>1</code></td>
+              <td><code>2</code></td>
+              <td><div class="step-table-slider-12"></div></td>
+            </tr>
+            <tr>
+              <td scope="row"><code>5</code></td>
+              <td><code>2</code></td>
+              <td><div class="step-table-slider-52"></div></td>
+            </tr>
+            <tr>
+              <td scope="row"><code>10</code></td>
+              <td><code>2</code></td>
+              <td><div class="step-table-slider-102"></div></td>
+            </tr>
+            <tr>
+              <td scope="row"><code>1</code></td>
+              <td><code>5</code></td>
+              <td><div class="step-table-slider-15"></div></td>
+            </tr>
+            <tr>
+              <td scope="row"><code>5</code></td>
+              <td><code>5</code></td>
+              <td><div class="step-table-slider-55"></div></td>
+            </tr>
+            <tr>
+              <td scope="row"><code>10</code></td>
+              <td><code>5</code></td>
+              <td><div class="step-table-slider-105"></div></td>
+            </tr>
+            <tr>
+              <td scope="row"><code>3</code></td>
+              <td><code>3</code></td>
+              <td><div class="step-table-slider-33"></div></td>
+            </tr>
+            <tr>
+              <td scope="row"><code>6</code></td>
+              <td><code>6</code></td>
+              <td><div class="step-table-slider-66"></div></td>
+            </tr>
+          </table>
+        </div>
+      </section>
+      <section class="sub-block" id="example-vertical">
+        <h3> <a href="#example-vertical" class="anchor"> Vertical Sliders </a> </h3>
+        <p>All functionality that we've seen so far will also apply to vertical sliders. There's no limitation here
+          except that your CSS may have to be slightly different to account for the slider being vertical.</p>
+        <dl class="tabs code" data-tab>
+          <dd class="active"><a href="#vertical-slider-result" title="result">Html</a></dd>
+          <dd><a href="#vertical-slider-html" title="html">&lt;/&gt;</a></dd>
+          <dd><a href="#vertical-slider-css" title="css">{;}</a></dd>
+          <dd><a href="#vertical-slider-js" title="jquery">($)</a></dd>
+        </dl>
+        <div class="tabs-content">
+          <div class="content active" id="vertical-slider-result">
+            <div id="vertical-slider"></div>
+          </div>
+          <div class="content" id="vertical-slider-html">
+            <pre data-lang="html">
+                                    &lt;div class="slider"&gt;&lt;/div&gt;
+                                </pre>
+          </div>
+          <div class="content" id="vertical-slider-css">
+            <pre data-lang="css">
+                                    #vertical-slider {
+                                        height: 150px;
+                                        margin-left: 30px;
+                                    }
+                                </pre>
+          </div>
+          <div class="content" id="vertical-slider-js">
+            <pre data-lang="js">
+                                    $(".slider")
+                    
+                                        .slider({ 
+                                            min: 0, 
+                                            max: 20,
+                                            orientation: "vertical"
+                                        })
+                    
+                                        .slider("pips", {
+                                            rest: "label",
+                                            step: "5"
+                                        });
+                                </pre>
+          </div>
+        </div>
+      </section>
+    </section>
+    <section class="block" id="styling">
+      <h2> <a href="#styling" class="anchor"> Styling </a> </h2>
+      <section class="sub-block" id="styling-circles">
+        <h3> <a href="#styling-circles" class="anchor"> Circular Pips </a> </h3>
+        <p>Here's a quick example showing that it's possible to move the <code>pips</code> inside the slider area.
+          We've given them a thicker, rounded appearance with a minimal feel. Also the <code>first</code> and <code>last</code> <code>pips</code> are positioned at the beginning and end of the slider, respectively. 
+          &mdash; Be sure to <a href="#styling-circles" data-active-tab="#styling-circles-css">check out the css</a> to see how it's done!</p>
+        <dl class="tabs code" data-tab>
+          <dd class="active"><a href="#styling-circles-result" title="result">Html</a></dd>
+          <dd><a href="#styling-circles-html" title="html">&lt;/&gt;</a></dd>
+          <dd><a href="#styling-circles-css" title="css">{;}</a></dd>
+          <dd><a href="#styling-circles-js" title="jquery">($)</a></dd>
+        </dl>
+        <div class="tabs-content">
+          <div class="content active" id="styling-circles-result">
+            <div id="circles-slider"></div>
+          </div>
+          <div class="content" id="styling-circles-html">
+            <pre data-lang="html">
+                                    &lt;div id="circles-slider"&gt;&lt;/div&gt;
+                                </pre>
+          </div>
+          <div class="content" id="styling-circles-css">
+            <pre data-lang="css">
+                                    #circles-slider.ui-slider {
+                                      border-radius: 20px;
+                                      background: #434d5a;
+                                      border: none;
+                                      height: 10px;
+                                      margin: 1em 4em 4em; }
+                    
+                                    #circles-slider .ui-slider-handle {
+                                      border-radius: 23px;
+                                      height: 23px;
+                                      width: 23px;
+                                      top: -7px;
+                                      margin-left: -11px;
+                                      border: 2px solid #fffaf7; }
+                    
+                                    #circles-slider .ui-slider-pip {
+                                      top: 3px; }
+                    
+                                      #circles-slider .ui-slider-pip .ui-slider-line {
+                                        width: 4px;
+                                        height: 4px;
+                                        border-radius: 4px;
+                                        margin-left: -2px;
+                                        background: #fffaf7; }
+                    
+                                      #circles-slider .ui-slider-pip.ui-slider-pip-last,
+                                      #circles-slider .ui-slider-pip.ui-slider-pip-first {
+                                        top: -7px; }
+                    
+                                        #circles-slider .ui-slider-pip.ui-slider-pip-last .ui-slider-line,
+                                        #circles-slider .ui-slider-pip.ui-slider-pip-first .ui-slider-line {
+                                          display: none; }
+                    
+                                        #circles-slider .ui-slider-pip.ui-slider-pip-last .ui-slider-label,
+                                        #circles-slider .ui-slider-pip.ui-slider-pip-first .ui-slider-label {
+                                          margin: 0; }
+                    
+                                      #circles-slider .ui-slider-pip.ui-slider-pip-first .ui-slider-label {
+                                        left: -2em;
+                                        text-align: right; }
+                    
+                                      #circles-slider .ui-slider-pip.ui-slider-pip-last .ui-slider-label {
+                                        left: 2em;
+                                        text-align: left; }
+                    
+                                      #circles-slider .ui-slider-pip.ui-slider-pip-selected-initial {
+                                        font-weight: normal; }
+                    
+                                      #circles-slider .ui-slider-pip.ui-slider-pip-selected {
+                                        font-weight: bold; }
+                    
+                                      #circles-slider .ui-slider-pip.ui-slider-pip-selected,
+                                      #circles-slider .ui-slider-pip.ui-slider-pip-selected-initial {
+                                        color: #434d5a; }
+                    
+                                </pre>
+          </div>
+          <div class="content" id="styling-circles-js">
+            <pre data-lang="js">
+                                    $("#circles-slider")
+                                        .slider({
+                                            max: 10,
+                                            value: 5
+                                        })
+                                        .slider("pips");
+                                </pre>
+          </div>
+        </div>
+      </section>
+      <section class="sub-block" id="styling-scale">
+        <h3> <a href="#styling-scale" class="anchor"> Scale Slider </a> </h3>
+        <p>We have an example, here, of a slider set up with a range and in the <code>pips</code> plugin we tell
+          it to use <code>labels</code> for every single value (<code>-50</code> ~ <code>50</code>) but we've hidden all the labels with <code>display:none;</code> and then used css3 <code>:nth-of-type(10n+3)</code> to show every
+          10th label 
+          
+          &mdash; Be sure to <a href="#styling-scale" data-active-tab="#styling-scale-css">check out the css</a> to see how it's done!</p>
+        <dl class="tabs code" data-tab>
+          <dd class="active"><a href="#styling-scale-result" title="result">Html</a></dd>
+          <dd><a href="#styling-scale-html" title="html">&lt;/&gt;</a></dd>
+          <dd><a href="#styling-scale-css" title="css">{;}</a></dd>
+          <dd><a href="#styling-scale-js" title="jquery">($)</a></dd>
+        </dl>
+        <div class="tabs-content">
+          <div class="content active" id="styling-scale-result">
+            <div id="scale-slider"></div>
+          </div>
+          <div class="content" id="styling-scale-html">
+            <pre data-lang="html">
+                                    &lt;div id="scale-slider"&gt;&lt;/div&gt;
+                                </pre>
+          </div>
+          <div class="content" id="styling-scale-css">
+            <pre data-lang="css">
+                                    #scale-slider.ui-slider {
+                                      border-radius: 0px;
+                                      background: #c7cdd5;
+                                      border: none;
+                                      height: 2px;
+                                      margin: 1em 4em 4em; }
+                                      
+                                      #scale-slider.ui-slider .ui-slider-range {
+                                        background: linear-gradient(to right, #434d5a 0%, #00c7d7 50%, #434d5a 100%)
+                                        border: 1px solid rgba(67, 77, 90, 0.5);
+                                        height: 4px;
+                                        top: -1px;
+                                        transition: all 0.2s ease-out; }
+                    
+                                    #scale-slider .ui-slider-handle {
+                                      border-radius: 2px;
+                                      height: 20px;
+                                      width: 12px;
+                                      top: -26px;
+                                      border: none; }
+                                      
+                                      #scale-slider .ui-slider-handle:nth-of-type(n+1) {
+                                        transform: rotateZ(-10deg);
+                                        margin-left: -9px; }
+                                      
+                                      #scale-slider .ui-slider-handle:nth-of-type(n+2) {
+                                        transform: rotateZ(10deg);
+                                        margin-left: -3px; }
+                                      
+                                      #scale-slider .ui-slider-handle:after {
+                                        content: "";
+                                        border: 6px solid transparent;
+                                        width: 0;
+                                        height: 0;
+                                        position: absolute;
+                                        bottom: -11px;
+                                        border-top-color: #434d5a; }
+                                      
+                                      #scale-slider .ui-slider-handle.ui-slider-handle.ui-state-focus:after,
+                                      #scale-slider .ui-slider-handle.ui-slider-handle.ui-state-hover:after,
+                                      #scale-slider .ui-slider-handle.ui-slider-handle.ui-state-active:after {
+                                        border-top-color: #00c7d7; }
+                    
+                                    #scale-slider .ui-slider-pip {
+                                      top: 2px; }
+                                      
+                                      #scale-slider .ui-slider-pip .ui-slider-label {
+                                        display: none;
+                                        background: rgba(67, 77, 90, 0);
+                                        color: #434d5a;
+                                        border-radius: 4px;
+                                        padding: 0.3em 0;
+                                        width: 2.4em;
+                                        margin-left: -1.2em;
+                                        transition: all 0.2s ease-out; }
+                                      
+                                      #scale-slider .ui-slider-pip .ui-slider-line {
+                                        height: 4px; }
+                                      
+                                      #scale-slider .ui-slider-pip:nth-of-type(5n+3) .ui-slider-line {
+                                        height: 8px; }
+                                      
+                                      #scale-slider .ui-slider-pip:nth-of-type(10n+3) .ui-slider-line {
+                                        height: 12px; }
+                                      
+                                      #scale-slider .ui-slider-pip:nth-of-type(10n+3) .ui-slider-label {
+                                        top: 16px;
+                                        display: block; }
+                                      
+                                      #scale-slider .ui-slider-pip.ui-slider-pip-last .ui-slider-line {
+                                        margin-left: -1px; }
+                                      
+                                      #scale-slider .ui-slider-pip.ui-slider-pip-selected .ui-slider-label, 
+                                      #scale-slider .ui-slider-pip.ui-slider-pip-selected-first .ui-slider-label, 
+                                      #scale-slider .ui-slider-pip.ui-slider-pip-selected-second .ui-slider-label {
+                                        background: rgba(67, 77, 90, 0.7);
+                                        color: #fffaf7; }
+                                </pre>
+          </div>
+          <div class="content" id="styling-scale-js">
+            <pre data-lang="js">
+                                    $("#scale-slider")
+                                        .slider({
+                                            max: 50,
+                                            min: -50,
+                                            values: [-20, 20],
+                                            range: true
+                                        })
+                                        .slider("pips", {
+                                            rest: "label"
+                                        });
+                                </pre>
+          </div>
+        </div>
+      </section>
+      <section class="sub-block" id="styling-emoji">
+        <h3> <a href="#styling-emoji" class="anchor"> Emoji !!! 😎 </a> </h3>
+        <p>Here we have some fun with Emoji! There's not a lot of CSS in this slider, instead the styling is
+          done mostly with javascript.
+          &mdash; Be sure to <a href="#styling-emoji" data-active-tab="#styling-emoji-css">check out the css</a> and <a href="#styling-emoji" data-active-tab="#styling-emoji-js">then the js</a> to see how it's done!</p>
+        <dl class="tabs code" data-tab>
+          <dd class="active"><a href="#styling-emoji-result" title="result">Html</a></dd>
+          <dd><a href="#styling-emoji-html" title="html">&lt;/&gt;</a></dd>
+          <dd><a href="#styling-emoji-css" title="css">{;}</a></dd>
+          <dd><a href="#styling-emoji-js" title="jquery">($)</a></dd>
+        </dl>
+        <div class="tabs-content">
+          <div class="content active" id="styling-emoji-result">
+            <p class="emoji-slider-question">What's your favourite animal?!</p>
+            <div id="emoji-slider"></div>
+          </div>
+          <div class="content" id="styling-emoji-html">
+            <pre data-lang="html">
+                                    &lt;div id="emoji-slider"&gt;&lt;/div&gt;
+                                </pre>
+          </div>
+          <div class="content" id="styling-emoji-css">
+            <pre data-lang="css">
+                                    #emoji-slider {
+                                      height: 5px;
+                                      margin-top: 100px; }
+                                      
+                                      #emoji-slider .ui-slider-handle {
+                                        top: -6px;
+                                        height: 16px;
+                                        width: 16px;
+                                        transform: rotateZ(45deg); }
+                                      
+                                      #emoji-slider .ui-slider-pip {
+                                        top: -50px;
+                                        margin-left: -1.2em; }
+                                      
+                                      #emoji-slider .emoji {
+                                        max-height: 2em;
+                                        transform: scale(0.9);
+                                        transition: transform 0.2s ease-out; }
+                                        @media screen and (max-width: 950px) {
+                                          #emoji-slider .emoji {
+                                            transform: scale(0.7); } }
+                                      
+                                      #emoji-slider .ui-slider-pip-selected .emoji {
+                                        transform: scale(1.3) translateY(-5px); }
+                                        @media screen and (max-width: 950px) {
+                                          #emoji-slider .ui-slider-pip-selected .emoji {
+                                            transform: scale(1.1) translateY(-5px); } }
+                                      
+                                      #emoji-slider .ui-slider-line {
+                                        display: none; }
+                    
+                    
+                                </pre>
+          </div>
+          <div class="content" id="styling-emoji-js">
+            <pre data-lang="js">
+                                    // store the array of animals for use later in the slider
+                                    // taken from <a href="http://apps.timwhitlock.info/emoji/tables/unicode#block-5-uncategorized">apps.timwhitlock.info</a> &lt;3
+                                    var emoji = [ "🐌", "🐐", "🐘", "🐙", "🐞", "🐠", "🐈", "🐕", "🐦", "🐬", "🐖", "🐇", "🐅", "🐃" ],
+                                        // my favourite is a dog! of course!
+                                        mine = "🐕";
+                    
+                                    $("#emoji-slider")
+                                        
+                                        // create a slider with 14 values (0-13)
+                                        // and the default is a cat, obviously! ( emoji[6] === "🐈" )
+                                        .slider({
+                                            max: 13,
+                                            value: 6
+                                        })
+                                        
+                                        // now activate the pips and set it to have labels for all
+                                        // items, and then set the labels to the array of animals from earlier
+                                        .slider("pips", {
+                                            rest: "label",
+                                            labels: emoji
+                                        })
+                                        
+                                        // whenever the slider changes value, we want to update the
+                                        // text above the slider with a kawaii message!
+                                        .on("slidechange", function( e, ui ) {
+                                                
+                                                // save the messages into variables
+                                                var mineIs = ( emoji[ui.value] === mine ) ? "Mine too!! 😂✌" : "But mine is a " + mine + "! 😞",
+                                                    yoursIs = "Oh golly gosh, your favourite animal is a " + emoji[ui.value] + "? &mdash; " + mineIs;
+                                                
+                                                // fade the question out quickly (using css)
+                                                $(".emoji-slider-question")
+                                                    .css({ opacity: 0 });
+                                                
+                                                // then fade it back in with the new message
+                                                // and use a custom function to display the emoji.
+                                                setTimeout(function() {
+                    
+                                                    $(".emoji-slider-question")
+                                                        .html( yoursIs )
+                                                        .twemoji()
+                                                        .css({ opacity: 1 });
+                    
+                                                }, 200 );
+                    
+                                        
+                                        });
+                    
+                                    // lastly after the slider is initialised we need to
+                                    // tell it to display out emoji on every label, but this
+                                    // is a custom function, <a href="https://github.com/twitter/twemoji">you can find it at github</a>
+                                    $("#emoji-slider .ui-slider-label").twemoji();
+                    
+                                </pre>
+          </div>
+        </div>
+      </section>
+    </section>
+    <section class="block" id="browser-support">
+      <h2> <a href="#browser-support" class="anchor"> Browser Support </a> </h2>
+      <ul class="browser-list">
+        <li class="browser-list__item"> <img src="picture/ch.png"><br>
+        </li>
+        <li class="browser-list__item"> <img src="picture/ff.png"><br>
+        </li>
+        <li class="browser-list__item"> <img src="picture/ie.png"><br>
+          7+ </li>
+        <li class="browser-list__item"> <img src="picture/sa.png"><br>
+        </li>
+        <li class="browser-list__item"> <img src="picture/op.png"><br>
+        </li>
+      </ul>
+      
+      <!-- thanks to https://github.com/alrra/browser-logos for the logos. -->
+      
+      <p>Although the slider should function corrently in IE7+, you may find that some of the CSS
+        styles can not be applied correctly to IE7. This is just a matter of doing a little
+        CSS work to style the slider how you like.</p>
+    </section>
+  </section>
+</section>
+
+<!-- jquery, jqueryui --> 
+<script src="js/jquery-plus-ui.min.js"></script> 
+
+<!-- foundation, prettify, jqueryui, twemoji --> 
+<script src="js/bower-libs.min.js"></script> 
+
+<!-- slider --> 
+<script src="js/jquery-ui-slider-pips.js"></script> 
+
+<!-- twemojiWrapper, prettyPre --> 
+<script src="js/helpers.js"></script> 
+
+<!-- app --> 
+<script src="js/examples.js"></script> 
+<script src="js/styling.js"></script> 
+<script src="js/app.js"></script>
+</body>
+</html>

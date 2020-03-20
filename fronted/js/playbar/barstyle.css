@@ -1,0 +1,101 @@
+@charset "utf-8";
+/* CSS Document */
+body,html,div,ul,li,a{
+	margin:0;
+	padding:0;
+	}
+body,html{
+	margin:0; padding:0;
+	height:100%;
+	width:100%;
+	font-family:"微软雅黑"
+	}
+body{
+	background:#fff;
+	/*text-align:center;*/
+	/*background:#A69D9D;*/
+	}
+.BarControl{
+	width:100%;
+	height:100%;
+	padding-top: 6.5px;
+	margin:0;
+	display:inline-block;
+	font-size: 10px;
+	}
+.BarBeginTime{
+	margin-left: 11px;
+	width: 40px;
+	height:20px;
+	color: black;
+	font-size:11px;
+	line-height:20px;
+	/*font-family: georgia;*/
+	font-weight: 600;
+	}
+.sp{
+	margin: 1px 0 0 0;
+	color: black;
+}
+.TheBar{
+	position:relative;
+	width:830px;
+	margin-left:2px;
+	height:8px;
+	border-radius:2px;
+	-webkit-border-radius:2px;
+	-moz-border-radius:2px;
+	background:#EBE8E8;
+	overflow:visible;
+	}
+.TheColorBar{
+	width:0px;
+	border-radius:0px;
+	-webkit-border-radius:0px;
+	-moz-border-radius:0px;
+	height:100%;
+	background:#3498DB;
+	float:left;
+	}
+.TimeBall{
+	width:14px;
+	height:14px;
+	border: 1px solid #EE927D;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:8px;
+	background:#3498DB;
+	position:absolute;
+	left:0px;
+	top:-3px;
+	z-index:2;
+	cursor:pointer;
+	}
+.BarTimeBall{
+	width:10px;
+	height:10px;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:8px;
+	background:#3498DB;
+	position:absolute;
+	left:0px;
+	top:-3px;
+	z-index:2;
+	cursor:pointer;
+	}
+.BarFinishTime{
+	margin-left: 8px;
+	width:40px;
+	height:20px;
+	color:black;
+	font-size:11px;
+	line-height:20px;
+	/*font-family: georgia;*/
+	font-weight: 600;
+	}
+.BarBeginTime,.BarFinishTime,.TheBar{
+	display:inline-block;
+	vertical-align:middle;
+	padding:0px;
+	}

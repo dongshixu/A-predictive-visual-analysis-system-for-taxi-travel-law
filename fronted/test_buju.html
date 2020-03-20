@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Map Tool</title>
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js" ></script>	
+		<script type="text/javascript" src="js/leaflet.js"></script>
+		<script type="text/javascript" src="js/leaflet.ChineseTmsProviders.js" ></script>
+		<script type="text/javascript" src="js/d3.min.js"></script>
+		<script type="text/javascript" src="js/heatmap/heatmap.js" ></script>
+		<script type="text/javascript" src="js/heatmap/leaflet-heatmap.js"></script>
+		<script type="text/javascript" src="js/contral.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-1.12.1/jquery-ui.js" ></script>
+		<script src="js/playbar/jquery-PlayBar.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="js/loading/js/loading.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js" ></script>
+		<script type="text/javascript" src="js/honeySwitch/lib/honeySwitch.js" ></script>
+		<script type="text/javascript" src="leaflet-pulse-icon/L.Icon.Pulse.js" ></script>
+		<script type="text/javascript" src="js/choose_select/chosen.jquery.js" ></script>
+		<script type="text/javascript" src="js/clock/script.js" ></script>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min.js"></script>
+		<script type="text/javascript" src="js/Donut3D.js" ></script>
+		<script type="text/javascript" src="js/flatpickr-gh-pages20160929/dist/flatpickr.js" ></script>
+		<script type="text/javascript" src="js/bootstrap-table-develop/dist/bootstrap-table.min.js" ></script>
+		<script type="text/javascript" src="js/jQuerySlider/js/jquery-ui-slider-pips.js" ></script>
+		<script type="text/javascript" src="js/colpick/js/colpick.js" ></script>
+		<script type="text/javascript" src="js/Leaflet.awesome-markers-2.0-develop/dist/leaflet.awesome-markers.js" ></script>
+		<script type="text/javascript" src="test_buju.js"></script>
+		
+		<link rel="stylesheet" href="css/leaflet.css" />
+		<link rel="stylesheet" href="js/jquery-ui-1.12.1/jquery-ui.min.css" />
+		<link rel="stylesheet" type="text/css" href="js/playbar/barstyle.css"/>
+		<link rel="stylesheet" href="js/loading/css/loading.css" />
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="css/bootstrap-switch.min.css" />
+		<link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.css" />
+		<link rel="stylesheet" type="text/css" href="js/honeySwitch/honeySwitch.css"/>
+		<link rel="stylesheet" href="leaflet-pulse-icon/L.Icon.Pulse.css" />
+		<link rel="stylesheet" href="js/choose_select/chosen.css" />
+		<link rel="stylesheet" href="js/clock/style.css" />
+		<link rel="stylesheet" href="js/flatpickr-gh-pages20160929/dist/flatpickr.material_orange.min.css" />
+		<link rel="stylesheet" href="js/bootstrap-table-develop/dist/bootstrap-table.min.css" />
+		<link rel="stylesheet" href="js/menu/style.css" />
+		<link rel="stylesheet" href="css/weather-icons.nin.css" />
+		<link rel="stylesheet" href="js/jQuerySlider/css/jquery-ui-slider-pips.min.css" />
+		<link rel="stylesheet" href="js/colpick/css/colpick.css" />
+		<link rel="stylesheet" href="js/Leaflet.awesome-markers-2.0-develop/dist/leaflet.awesome-markers.css" />
+		<link rel="stylesheet" type="text/css" href="test_buju.css"/>
+	</head>
+	<body>
+		<div id="bg" style="background-color: white;">
+			<div id="clock" class="dark">
+			    <div class="display">
+			        <div class="ampm"></div>
+			        <div class="data"></div>
+			        <div class = "weather"></div>
+			        <div class="digits"></div>
+			    </div>
+			</div>
+			<div id="mapbg">
+				<div style="position: absolute; height: 34px; width: 100%; left: 0px; top: 0px; background: #D2D1D2; box-shadow:inset 0px 0px 5px rgb(0, 0, 0, 0.3); border-radius: 4px 4px 4px 4px;">
+					<div id="dataset" style="position: absolute; height: 100%; width: 190px; left: 10px;">
+						<!--<p style="font-family: georgia; top: 6.5px; left: 15px; font-weight: 600;">Dataset:</p>-->
+						<i class="fa fa-database" style="position: absolute; left: 15px; top: 8px; width: 20px; height: 20px; font-size: 18px;"></i>
+						<p style="background: white; left: 50px; width: 90px; height: 20px; top: 7px; border-radius: 5px; padding-left: 5px; font-family: georgia;font-weight: 600; font-size: 13px; line-height: 20px;">taxi gps</p>
+						<img src="img/triangle1.png" style="position: absolute; left: 125px; top: 9px; width: 8px; height: 6px;"/>
+						<img src="img/triangle2.png" style="position: absolute; left: 125px; top: 18px; width: 8px; height: 6px;"/>
+					</div>
+					<div id="gloabledate" style="position: absolute; height: 100%; width: 185px; left: 170px;">
+						<!--<p style="font-family: georgia; top: 6.5px; left: 15px; font-weight: 600;">Date:</p>-->
+						<i class="fa fa-calendar" style="position: absolute; left: 15px; top: 8px; width: 20px; height: 20px; font-size: 18px;"></i>
+						<p class="flatpickr" data-default-date="2014-01-01"   data-wrap="true" data-click-opens="true" style="margin: 0px; position: absolute; width: 100px; height: 25px; left: 39px; top: 7px; font-weight: 600; line-height: 25px; color: #2F2F2F;">
+							<input class="D1" data-input style="position: absolute; width: 95px; height: 20px; border-radius: 5px; padding-left: 0px; text-align: center; font-size: 14px; left: 8px; top: 0px;border-width: 0px;box-shadow: 4px 5px 5px rgba(211,211,211);">
+						</p>
+					</div>
+					<div id="gloabletime" style="position: absolute; height: 100%; width: 230px; left: 329px;">
+						<!--<p style="font-family: georgia; top: 6.5px; left: 0px; font-weight: 600;">Time:</p>-->
+						<i class="fa fa-clock-o" style="position: absolute; left: 15px; top: 7px; width: 20px; height: 20px; font-size: 21px;"></i>
+						<p style="margin: 0px; position: absolute; width: 160px; height: 20px; left: 45px; top: 7px; font-weight: 600; line-height: 20px; color: #2F2F2F;">
+							<input id="time1" class=flatpickr data-enable-time=true data-enable-seconds=true data-no-calendar=true value="08:00:00" data-time_24hr=true style="padding-left: 5px; width: 68px; height: 20px; border-radius: 5px; text-align: left; margin-left: 5px;border-width: 0px;">
+							~
+							<input id="time2" class=flatpickr data-enable-time=true data-enable-seconds=true data-no-calendar=true value="08:00:00" data-time_24hr=true style="padding-left: 5px; width: 68px; height: 20px; border-radius: 5px; text-align: left; border-width: 0px;">
+						</p>
+					</div>
+					<!--<div id="modeselect" style="position: absolute; height: 100%; width: 300px; left: 630px; display: none;">
+						<p style="font-family: georgia; top: 6.5px; left: 15px; font-weight: 600; position: absolute; margin: 0;">Mode selection:</p>
+						<p id="realmode" style="background: white; left: 135px; width: 120px; height: 20px; top: 6px; border-radius: 5px 5px 5px 5px; padding-left: 43px; font-family: georgia;font-weight: 600; font-size: 13px; line-height: 21px; position: absolute; margin: 0;">Taxi</p>
+						<div id="model" style="display: block;">
+							<p>Taxi</p>
+							<p>Road</p>
+							<p>Prediction</p>
+						</div>
+						<img src="img/triangle1.png" style="position: absolute; left: 240px; top: 8px; width: 8px; height: 6px; cursor: pointer;"/>
+						<img src="img/triangle2.png" style="position: absolute; left: 240px; top: 17px; width: 8px; height: 6px; cursor: pointer;"/>
+					</div>-->
+					<!--<div class = "test" style="position: absolute;height: 100%; width: 200px; left: 630px;"></div>-->
+				</div>
+				<div id="map"></div>
+				<div id="plan1" class="sametip" style="left: 350px;">
+					<i id="closeplan1" class="fa fa-close" style="position: absolute; left: 180px; top: 5px; font-size: 16px; color: silver;z-index: 1;"></i>
+					<p style="text-align: center; color: white; font-weight: 600; font-family: georgia; margin: 3px 0px 0px 0px;">Our method</p>
+					<p class="pp1" style="color: white; font-weight: 600; font-family: georgia; margin: 0px 0px 0px 8px;">color : ##</p>
+					<p class="pp2" style="color: white; font-weight: 600; font-family: georgia; margin: 3px 0px 0px 8px;">distence : 4.134 km</p>
+					<p class="pp3" style="color: white; font-weight: 600; font-family: georgia; margin: 3px 0px 0px 8px;">time cost : 9.316 min</p>
+				</div>
+				<div id="plan2" class="sametip" style="left: 600px; ">
+					<i id="closeplan2" class="fa fa-close" style="position: absolute; left: 180px; top: 5px; font-size: 16px; color: silver;"></i>
+					<p style="text-align: center; color: white; font-weight: 600; font-family: georgia; margin: 3px 0px 0px 0px;">Original</p>
+					<p class="pp1" style="color: white; font-weight: 600; font-family: georgia; margin: 0px 0px 0px 8px;">color : ##</p>
+					<p class="pp2" style="color: white; font-weight: 600; font-family: georgia; margin: 3px 0px 0px 8px;">distence : 3.124 km</p>
+					<p class="pp3" style="color: white; font-weight: 600; font-family: georgia; margin: 3px 0px 0px 8px;">time cost : 38.14 min</p>
+				</div>
+				<!--<div id="plan3" class="sametip" style="left: 500px; display: block;">
+					<i id="closeplan2" class="fa fa-close" style="position: absolute; left: 180px; top: 5px; font-size: 16px; color: silver;"></i>
+					<p style="text-align: center; color: white; font-weight: 600; font-family: georgia; margin: 3px 0px 0px 0px;">Original</p>
+					<p class="pp1" style="color: white; font-weight: 600; font-family: georgia; margin: 0px 0px 0px 8px;"></p>
+					<p class="pp2" style="color: white; font-weight: 600; font-family: georgia; margin: 3px 0px 0px 8px;"></p>
+					<p class="pp3" style="color: white; font-weight: 600; font-family: georgia; margin: 3px 0px 0px 8px;"></p>
+				</div>-->
+				<div id="show_road_icon" style="position: absolute; height: 150px; width: 85px; top: 430px; left: 0px; display: none; font-size: 10px;">
+					<p style="position: absolute; left: 8px; top: 2px; font-family: georgia; font-weight: 700; margin: 0; font-size: 11px;">N-L rate</p>
+					<p style="position: absolute; left: 41px; top: 21px; font-family: georgia; font-weight: 700; margin: 0; font-size: 11px;">100%</p>
+					<p style="position: absolute; left: 41px; top: 75px; font-family: georgia; font-weight: 700; margin: 0; font-size: 11px;">50%</p>
+					<p style="position: absolute; left: 41px; top: 130px; font-family: georgia; font-weight: 700; margin: 0; font-size: 11px;">0%</p>
+					<div style="position: absolute; width: 18px; height: 120px; top: 25px; left: 15px; background: linear-gradient(to bottom, #60CDBE, #FDFFBF, #AA1B27);"></div>
+				</div>
+				<div id="show_road_count" style="position: absolute; height: 150px; width: 85px; top: 430px; left: 0px; display: none; font-size: 10px;">
+					<p class="countname" style="position: absolute; left: 11px; top: 2px; font-family: georgia; font-weight: 700; margin: 0; font-size: 11px;">Count/p>
+					<p class="countmax" style="position: absolute; left: 41px; top: 21px; font-family: georgia; font-weight: 700; margin: 0; font-size: 11px;">100%</p>
+					<p class="countmin" style="position: absolute; left: 41px; top: 130px; font-family: georgia; font-weight: 700; margin: 0; font-size: 11px;">0%</p>
+					<div style="position: absolute; width: 18px; height: 120px; top: 25px; left: 15px; background: linear-gradient(to bottom, rgb(255,0,0), rgb(247,250,162));"></div>
+				</div>
+				<div id="map_svg_tool_down">
+					<i id="" class="fa fa-angle-double-down fa-2x" style="margin: 5px 0px 0px 33px;"></i>
+				</div>
+				<div style="z-index: 801; position: absolute; width: 40px; right: 11px; top: 35px; height: 150px; ">
+					<p id="cli_select" class="sameP" style="top: 10px;">
+						<img src="img/arrow1.png" style="position: absolute; left: 0px; top: 0px;"/>
+					</p>
+					<!--<p class="sameP" style="top: 60px;">
+						<img src="img/zoom1.png" style="position: absolute; left: 5.5px; top: 6.5px;"/>
+					</p>-->
+					<p id="cli_position" class="sameP" style="top: 60px;">
+						<img src="img/position1.png" style="position: absolute; left: 6px; top: 6px;"/>
+					</p>
+					<p id="cli_trash" class="sameP" style="top: 110px;">
+						<img src="img/delect1.png" style="position: absolute; left: 6.5px; top: 6px;"/>
+					</p>
+					<!--<p id="show_R" class="sameP" style="top: 10px;">
+						<img src="img/sr.png" style="position: absolute; left: -0.5px; top: -2.5px; width: 37px; height: 37px;"/>
+					</p>-->
+				</div>
+				<div id ="toolbar">
+					<div id="playmenue" style="position: absolute; width: 120px;height: 30px; left: 20px;">
+						<p id = "icon"><i id="i3" class="fa fa-play fa-stack-1x" style="top: 6.5px; left: 1.5px;" title="Play"></i></p>
+						<p id = "icon1"><i id="i4" class="fa fa-backward fa-stack-1x" style="top: 6.5px; left: -1.5px;" title="Yeaterday"></i></p>
+						<p id = "icon2"><i id="i5" class="fa fa-forward fa-stack-1x" style="top: 6.5px; left: 1.5px;" title="Tomorrow"></i></p>
+					</div>
+					<div class = "test"></div>
+				</div>
+				<div id = "pop" >
+					<i id="pop1"></i>
+					<div id="pop2" style="font-size: 10px; text-align: center; opacity: 1; margin-top: -1px; font-weight: 1px;"></div>
+				</div>
+				<!--<p id="modechoose" style="display: none;">Taxi</p>
+				<i id="modelangle" class="fa fa-angle-down" style="display: none; position: absolute; left: 210px; top: 15.5px; font-weight: 700; font-size: 20px;"></i>
+				<div id="model" style="display: none;">
+					<p>Taxi</p>
+					<p>Road</p>
+					<p>Prediction</p>
+				</div>-->
+				<!--<div id="tripinfo">
+					<!--<i id="closeinfo" class="fa fa-close" style="position: absolute; left: 110px; top: 5px; font-size: 16px; color: silver;z-index: 1;"></i>-->
+					<!--<p class="trip_p1" style="text-align: center; line-height: 23px; font-weight: 600; font-size: 12px; font-family: 'Times New Roman'; margin: 0px;">00 H</p>
+					<p class="trip_p2">trip num: 0</p>
+					<p class="trip_p3">income: 0 rmb</p>
+					<p class="trip_p4">aveincome: 0 rmb</p>
+				</div>-->-->
+				<div id="modeicon" style="cursor: pointer; position: absolute; width: 35px; height: 35px; left: 12px; top: 129px; background: white; box-shadow:inset 0px 0px 5px rgba(0, 0, 0, .075); border-radius: 5px;border: 1px solid #cccccc;">
+					<i class="fa fa-taxi" title="Taxi mode" style="font-size: 15px; position: absolute; left: 9px; top: 8px; color: #EE927D;"></i>
+				</div>
+				<div id="model" style="display: none;">
+					<p style="margin: 0;">Taxi</p>
+					<p>Road</p>
+					<p>Prediction</p>
+				</div>
+			</div>
+			<div id="bar" style="display: none; position: absolute; left: 1162px; top: 170px; width: 60px; height: 130px; z-index: 10;">
+				<div id = "circle-contral"><i id="i6" class="fa fa-stop fa-stack-2x" style="top: 6.5px; left: 0.5px; color: none;" title="Stop" ></i></div>
+				<div id = "circle-contral1"><i id="i7" class="fa fa-play fa-stack-2x" style="top: 7px; left: 3.5px; " title="Play" ></i></div>
+			</div>
+			
+			<div id="buju">
+				<div id="se_title" style="position: absolute; width: 94.5%; margin: 5px 0 0 6px; height: 30px; line-height: 30px;  background-color: #2F2F2F; font-family: Georgia; font-size: 15px; border-radius: 5px 5px 2px 2px; ">
+					<p style="margin-left: 9px; font-weight: 600; color: white;">Taxi</p>
+					<!--<i id="iconTT" class="fa fa-cog fa-stack-1x" style="font-size: 19px; position: absolute; top: 1px; left: 308px; width: 20px; height: 20px; color: white;"></i>-->
+					<img src="img/set.png" style="position: absolute; top: 6px; left: 303px; width: 18px; height: 16px;"/>
+				</div>
+				<div style="position: absolute; width: 100%; height: 550px; top: 30px; left: 0px;">
+						<div style="position: relative; width: 100%; display: none;">
+							<div style="margin: 10px 0px 0px 6px; width: 332px; height: 50px; border: 2px solid silver; border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom: 0;">
+								<p class="flatpickr" data-default-date="2014-01-01"   data-wrap="true" data-click-opens="true" style="margin: 0px; position: absolute; width: 150px; height: 40px; left: 5px; top: 5px; font-weight: 600; line-height: 40px; color: #2F2F2F;">
+									<i class="fa fa-calendar fa-stack-1x" style="color: #2F2F2F; position: absolute; top: -1.5px; font-size: 16px; left: 126px; width: 20px; height: 20px; cursor: pointer; z-index: 2;" data-toggle></i>
+									<input class="D1" data-input style="position: absolute; width: 145px; height: 30px; border-radius: 10px; padding-left: 16px; text-align: left; font-size: 15px; left: 8px; top: 5px;border-width: 0px;box-shadow: 4px 5px 5px rgba(211,211,211);">
+								</p>
+								<p style="margin: 0px; position: absolute; width: 10px; height: 0px; left: 165px; top: 25px; border-top: 2px solid silver;"></p>
+								<p class="flatpickr1" data-default-date="2014-01-01"   data-wrap="true" data-click-opens="true" style="margin: 0px; position: absolute; width: 170px; height: 40px; left: 170px; top: 5px; font-weight: 600; line-height: 40px; color: #2F2F2F;">
+									<i class="fa fa-calendar fa-stack-1x" style="position: absolute; top: -1.5px; font-size: 16px; left: 126px; width: 20px; height: 20px; cursor: pointer; z-index: 2; color: #2F2F2F;" data-toggle></i>
+									<input class="D2" data-input style="position: absolute; width: 145px; height: 30px; border-radius: 10px; padding-left: 16px; text-align: left; left: 15px; top: 5px; border-width: 0px;box-shadow: 4px 5px 5px rgba(211,211,211);">
+								</p>
+							</div>
+						</div>
+						<div style="position: relative; width: 100%;">
+							<div style="margin: 10px 0px 0px 6px; width: 332px; height: 545px; border: 2px solid silver; border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; box-shadow: 0px 0px 3px rgba(211,211,211);">
+								<div style="position: relative; width: 100%; margin: 15px 0 0 0;">
+									<p style="margin: 10px 0px 0px -12px; font-size: 10px; font-weight: 600;">　
+										<select id = "se1" data-placeholder="Enter plate number" class="chosen-select" style="width: 253px;"></select>
+										<p id="searchtaxi" style="cursor: pointer; font-family: georgia; font-weight: 600; top: 0px; box-shadow: 0 3px 3px rgba(0, 0, 0, .075); border: 1px solid #cccccc; background: #2F2F2F; text-align: center; line-height: 34px; color: white; border-radius: 0px 4px 4px 0px; position: absolute; left: 255px; height: 34px; width: 70px;">Search</p>
+									</p>
+								</div>
+								<div style="position: relative; width: 100%;">
+									<ul class="tabsClass" style="">
+										<li id="view1Tab" class="addtabsClass1">Trip Fee</li>
+										<li id="view2Tab" class="addtabsClass2">Trip Type</li>
+									</ul>
+								</div>
+								<div style="position: relative; width: 100%;">
+									<div id="view1">
+										<div id="tripinfo">
+											<!--<i id="closeinfo" class="fa fa-close" style="position: absolute; left: 110px; top: 5px; font-size: 16px; color: silver;z-index: 1;"></i>-->
+											<p class="trip_p1" style="text-align: center;  height: 12px; line-height: 18px; font-weight: 600; font-size: 12px; font-family: 'Times New Roman'; margin: 0px;">00 H</p>
+											<p class="trip_p2">trip num: 0</p>
+											<p class="trip_p3">income: 0 rmb</p>
+											<p class="trip_p4">aveincome: 0 rmb</p>
+										</div>
+									</div>
+									<div id="view2">
+										<!--<i id="testnoload" class="fa fa-pie-chart fa-stack-1x" style="color: #2FC25B; position: absolute; top: 25px; left: 150px; width: 20px; height: 20px; font-size: 20px;"></i>-->
+									</div>
+								</div>
+								<div style="position: absolute; top: 475px; width: 320px; height: 40px; left: 10px;">
+									<p class="bujuSamep" id="count" style="left: 10px;">Trip Num</p>
+									<p class="bujuSamep" id="avefee" style="left: 125px;">Ave Fee</p>
+									<p class="bujuSamep" id="avedistence" style="left: 236px;">Ave Dist</p>
+								</div>
+						    </div>
+						</div>
+				</div>
+			</div>
+			<div id="buju1">
+				<div id="se_title" style="position: absolute; width: 97%; margin: 5px 0 0 10px; height: 30px; line-height: 30px;  background-color: #2F2F2F; font-family: Georgia; font-size: 15px; border-radius: 5px 5px 2px 2px;">
+					<p style="margin-left: 9px; font-weight: 600; color: white;">Prediction</p>
+					<!--<i class="fa fa-cog fa-stack-1x" style="font-size: 19px; position: absolute; top: 1px; left: 392px; width: 20px; height: 20px; color: white;"></i>-->
+					<img src="img/set.png" style="position: absolute; top: 6px; left: 390px; width: 18px; height: 16px;"/>
+				</div>
+				<div style="position: absolute; width: 418px; height: 572px; top: 40px; left: 10px;">
+					<div style="position: absolute; width: 100%; height: 30px;  border: 2px solid #C3C3C3; border-top-right-radius: 3px; border-top-left-radius: 3px;background: white;">
+						<b style="position: absolute; left: 25px; top: 3px; font-size: 14px; font-family: georgia; color: #5E6268;">Parameters & Analysis</b>
+						<i id="" class="fa fa-bookmark fa-stack-1x" style="position: absolute; top: 4px; left: 0px; width: 20px; height: 20px; color: #5E6268;"></i>
+						<i id="prediction" class="fa fa-play-circle-o fa-stack-1x" style="position: absolute; top: -4.5px; left: 380px; width: 20px; height: 20px; color: #2F2F2F; font-size: 24px; cursor: pointer;"></i>
+					</div>
+					<div id="pre_table">
+						<!--<div id="time_pick">
+							<p class="flatpickr" data-default-date="2014-01-01"   data-wrap="true" data-click-opens="true" style="margin: 0px; position: absolute; width: 125px; height: 40px; left: 5px; top: 0px; font-weight: 600; line-height: 40px; color: #2F2F2F;">
+									<i class="fa fa-calendar fa-stack-1x" style="position: absolute; top: -0.5px; left: 92px; width: 20px; height: 20px; cursor: pointer; color: #2F2F2F; z-index: 2; font-size: 16px;" data-toggle></i>
+									<input class="D4" data-input style="position: absolute; width: 115px; height: 30px; border-radius: 10px;padding-left: 5px; text-align: left; left: 2px; top: 5px; border-width: 0px;box-shadow: 4px 5px 5px rgba(211,211,211)">
+							</p>
+							<i id="prediction" class="fa fa-play-circle-o fa-stack-1x" style="position: absolute; top: 0.5px; left: 380px; width: 20px; height: 20px; color: #2F2F2F; font-size: 24px;"></i>
+						</div>-->
+						<div id="weather_bored">
+							<p style="position: absolute; height: 31px; line-height: 31px; left: 10px;  font-size: 14px; font-weight: 700; font-family: 'Times New Roman';">Weather:</p>
+							<ul class="weather_icon">
+								<li><i class="wi wi-day-sunny" style="font-size: 26px; color: #D3D3D3;"></i></li>
+								<li><i class="wi wi-day-cloudy" style="font-size: 26px; color: #D3D3D3;"></i></li>
+								<li><i class="wi wi-day-hail" style="font-size: 26px; color: #D3D3D3;"></i></li>
+								<li><i class="wi wi-day-snow" style="font-size: 26px; color: #D3D3D3;"></i></li>
+								<li><i class="wi wi-day-haze" style="font-size: 26px; color: #D3D3D3;"></i></li>
+							</ul>
+						</div>
+						<div id="week_bored">
+							<p style="position: absolute; height: 31px; line-height: 31px; left: 10px;  font-size: 14px; font-weight: 700; font-family: 'Times New Roman';">Week:</p>
+							<ul class="week_text">
+								<li><i class="one">Mon</i></li>
+								<li><i class="two">Tue</i></li>
+								<li><i class="three">Wed</i></li>
+								<li><i class="four">Thu</i></li>
+								<li><i class="five">Fir</i></li>
+								<li><i class="six">Sat</i></li>
+								<li><i class="seven">Sun</i></li>
+							</ul>
+						</div>
+						<div id="time" style="position: absolute; top: 128px; width: 100%; height: 40px;">
+							<p style="position: absolute; height: 31px; line-height: 31px; left: 10px;  font-size: 14px; font-weight: 700; font-family: 'Times New Roman';">Time:</p>
+							<div class="slider" style="margin: 0; position: absolute; left: 87px; width: 313px; height: 7px; top: 10px;"></div>
+						</div>
+					</div>
+					<div id="buju4">
+						<div style="border-radius: 3px; position: absolute; top: 0px; width: 100%; height: 30px; background: #E0EDFA;">
+							<input id="nowtime" value="Time" style="box-shadow: 0px 0px 5px rgba(211,211,211); border-width: 0px; position: absolute; top: 5px; width: 80px; height: 20px; left: 162px; outline: none; border-radius: 10px; font-style: italic; color: #D3D3D3; font-family: georgia;"/>
+							<i id="" class="fa fa-clock-o fa-stack-1x" style="cursor: pointer; text-align: center; line-height: 26px; position: absolute;  border-radius: 6px;  top: 2px; left: 10px; width: 26px; height: 26px; color: #5E6268; font-size: 22px; "></i>
+							<i id="left" class="fa fa-angle-double-left fa-stack-1x" style="cursor: pointer; text-align: center; line-height: 20px; position: absolute; box-shadow: 0px 0px 5px rgba(211,211,211); border-radius: 6px;  top: 5.5px; left: 123px; width: 26px; height: 20px; color: #5E6268; font-size: 21px; font-weight: 800;"></i>
+							<i id="right" class="fa fa-angle-double-right fa-stack-1x" style="cursor: pointer; text-align: center; line-height: 20px; position: absolute;  box-shadow: 0px 0px 5px rgba(211,211,211); border-radius: 6px; top: 5.5px; left: 255px; width: 26px; height: 20px; color: #5E6268; font-size: 21px; font-weight: 800;"></i>
+							<!--<i id="pieChart" class="fa fa-pie-chart fa-stack-1x" style="color: #2FC25B; position: absolute; top: 3px; left: 375px; width: 20px; height: 20px; font-size: 20px;"></i>-->
+							<!--<i id="Hchart" class="fa fa-bar-chart fa-stack-1x" style="position: absolute; top: 3px; left: 335px; width: 20px; height: 20px; color: #5E6268; font-size: 20px;"></i>-->
+							<!--<i id="lineChart" class="fa fa-line-chart fa-stack-1x" style="color: rgb(255, 127, 14); position: absolute; top: 3px; left: 375px; width: 20px; height: 20px; font-size: 20px;"></i>-->
+							<!--<i id="Hchart" class="fa fa-line-chart fa-stack-1x" style="cursor: pointer; text-align: center; line-height: 26px; position: absolute;  box-shadow: 0px 0px 5px rgba(211,211,211); border-radius: 6px; top: 2px; left: 378px; width: 26px; height: 26px; color: #5E6268; font-size: 20px;"></i>-->
+							<!--<img src="img/chart1.png"/ style="cursor: pointer; text-align: center; line-height: 20px; position: absolute;  box-shadow: 0px 0px 0px rgba(211,211,211);  top: 5px; left: 380px; width: 20px; height: 20px; font-size: 20px;">-->
+							<i id="" class="fa fa-line-chart fa-stack-1x" style="cursor: pointer; text-align: center; line-height: 26px; position: absolute;  border-radius: 6px;  top: 3px; left: 378px; width: 26px; height: 26px; color: #5E6268; font-size: 17px; "></i>
+						</div>
+					</div>
+				</div>
+				<div style="position: absolute; width: 418px; height: 331px; top: 594px; left: 10px;">
+					<div style="position: absolute; width: 100%; height: 32px;  border: 2px solid #C3C3C3; background: white; border-top-width:0;">
+						<b style="position: absolute; left: 25px; top: 5px; font-size: 14px; font-family: georgia; color: #5E6268;">Route Plan</b>
+						<i id="" class="fa fa-bookmark fa-stack-1x" style="position: absolute; top: 5px; left: 0px; width: 20px; height: 20px; color: #5E6268;"></i>
+					</div>
+					<div  style=" position: absolute; top: 30px; width: 100%; height: 281px; border: 2px solid #C3C3C3; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; border-top-width: 0; ">
+						<div style="overflow-y: auto; overflow-x: hidden; position: absolute; width: 93%; height: 215px; top: 50px; left: 14px; border: 1px solid #C3C3C3; border-radius: 5px; box-shadow: 1px 1px 5px rgba(211,211,211), -1px -1px 5px rgba(211,211,211);">
+							<div id="POIcontain" style="position: relative; width: 100%; margin: 5px 0px 0px 0px;">
+								<div style="width: 100%; height: 40px;">
+									<input id="originInput" value="Select Position" style="border-radius: 3px; position: absolute; top: 5px; left: 5px; height: 30px; width: 335px; outline: none; font-style: italic; color: #D3D3D3; font-family: georgia;"/>
+									<i id="addPOI" class="fa fa-plus-circle fa-stack-1x" style="position: absolute; top: 6px; left: 350px; width: 20px; height: 20px; font-size: 20px; color: #5E6268;"></i>
+									<!--<img src="img/bank.png"  style="position: absolute; z-index: 10; width: 22px; height: 20px; left: 15px; top: 10px;"/>-->
+								</div>
+							</div>
+							<div style="position: relative; width: 100%; height: 40px; margin-left: 0px;">
+								<input id="destinationInput" value="Select Position" style="border-radius: 3px; position: absolute; left: 5px; top: 10px; height: 30px; width: 335px; outline: none; font-style: italic; color: #D3D3D3; font-family: georgia;"/>
+								<i id="searchshortroad" class="fa fa-search fa-stack-1x" style="text-align: center; line-height: 26px; box-shadow: 0px 0px 5px rgba(211,211,211); border-radius: 6px; position: absolute; top: 11px; left: 350px; width: 26px; height: 26px; font-size: 20px; color: #5E6268;"></i>
+							</div>
+						</div>
+						<div style="overflow-y: auto; overflow-x: hidden; position: absolute; width: 100%; height: 50px; top: 0px; left: 0px;">
+							<div style="position: absolute; width: 100px; height: 50px; left: 290px; top: 0px;">
+								<input class="ds" type="checkbox" checked="checked" style="border-radius: 15px; position: absolute; height: 15px; width: 15px; top: 14px; left: 16px;"/>
+								<p style="position: absolute; margin: 0px; height: 20px; width: 71px; left: 36px; top: 16px; font-weight: 600; color: #5E6268;">Shortest D</p>
+							</div>
+							<div style="position: absolute; width: 100px; height: 50px; left: 200px; top: 0px;">
+								<input class="ts" type="checkbox" checked="checked" style="border-radius: 15px; position: absolute; height: 15px; width: 15px; top: 14px; left: 0px;"/>
+								<p style="position: absolute; margin: 0px; height: 20px; width: 70px; left: 22px; top: 16px; font-weight: 600; color: #5E6268;">Shortest T</p>
+							</div>
+							<div style="position: absolute; width: 140px; height: 40px; left: 9px; top: 1px;">
+								<p style="position: absolute; margin: 0px; height: 20px; width: 70px; left: 5px; top: 15px; font-weight: 600; color: #5E6268;">Start time:</p>
+								<input id="time3" class=flatpickr data-enable-time=true data-enable-seconds=true data-no-calendar=true value="08:00:00" data-time_24hr=true style="position: absolute; width: 63px; height: 25px; border: 1px solid #C3C3C3; font-weight: 600;  border-radius: 5px; text-align: center; top: 12px; left: 85px;border-width: 1px;box-shadow: 2px 2px 5px rgba(211,211,211);">
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="buju3">
+				<div id="rodatable3" style="position: absolute; width: 24%; display: block;">
+					<div id="se_title" style="position: absolute; width: 96%; margin: 0px 0 0 5px; height: 30px; line-height: 30px;  background-color: #2F2F2F; font-family: Georgia; font-size: 15px; border-radius: 5px 0px 0px 2px;">
+						<p style="margin-left: 10px; font-weight: 600; color: white;">Road</p>
+						<!--<i id="iconTT" class="fa fa-cog fa-stack-1x" style="font-size: 19px; color: white; position: absolute; top: 1px; left: 309px; width: 20px; height: 20px;"></i>-->
+						<img src="img/set.png" style="position: absolute; top: 6px; left: 309px; width: 18px; height: 16px;"/>
+					</div>
+				</div>
+				<div style="position: absolute; width: 3px; height: 2px; top: 310px; left: 345px; background: silver; z-index: 10;"></div>
+				<div style="position: absolute; height: 282px; top: 30px; width: 350px; ">
+					<!--<div class="buju3SameDiv" style="left: 82px;">
+						<i class="fa fa-plus fa-stack-1x" style="color: #6483B2; position: absolute; top: -1px; left: 0px; font-size: 19px;"></i>
+					</div>
+					<div class="buju3SameDiv" style="left: 246px;">
+						<i class="fa fa-plus fa-stack-1x" style="color: #6483B2; position: absolute; top: -1px; left: 0px; font-size: 19px;"></i>
+					</div>-->
+					<div id="RoadTable">
+						<div style="position: absolute; width: 100%; height: 35px; border-bottom: 2px solid silver;">
+							<p style="position: absolute; margin: 0; width: 85px; height: 35px; font-family: georgia; left: 6px; line-height: 36px; font-weight: 600;">Animation:</p>
+							<div style="position: absolute; width: 100px; height: 35px; left: 241px; top: 0px;">
+								<input class="fl" type="checkbox"  style="border-radius: 15px; position: absolute; height: 15px; width: 15px; top: 7px; left: 14px;"/>
+								<p style="position: absolute; margin: 0px; height: 20px; width: 70px; left: 41px; top: 8px; font-weight: 600; color: #5E6268;">Flow</p>
+							</div>
+							<div style="position: absolute; width: 100px; height: 35px; left: 158px; top: 0px;">
+								<input class="sp" type="checkbox" style="border-radius: 15px; position: absolute; height: 15px; width: 15px; top: 7px; left: 0px;"/>
+								<p style="position: absolute; margin: 0px; height: 20px; width: 70px; left: 28px; top: 8px; font-weight: 600; color: #5E6268;">Speed</p>
+							</div>
+						</div>
+						<div class="RoadTableBody">
+							<div style="position: absolute; left: 1px; top: 2px; width: 333px; border-bottom: 1px solid #ddd;">
+								 <table class="tablehead">
+										<tr class="tableheadtr">
+											 <th>Name</th>
+											 <th>AveSpeed</th>
+											 <th>AveFlow</th>
+											 <th>Position</th>
+										</tr>
+								 </table>
+							</div>
+							<div class="panel-group" id="MsgAccordion1" style="position: absolute; width: 333px; height: 211px; top: 28px; overflow-x: hidden; overflow-y: auto;"></div>
+						</div>
+					</div>
+					<div class="flowAnimationDiv" style="z-index: 1; display: none; background: white; position: absolute; top: 1px; left: 6px; border: 1px solid silver; border-top-width: 0px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; box-shadow: 0px 2px 3px rgba(211,211,211); height: 85px; width: 338px;">
+						<div style=" position: absolute; border-radius: 5px; top: 30px; left: 0px; height: 42px; width: 332px;">
+							<p class="flatpickr" data-default-date="2014-01-01"   data-wrap="true" data-click-opens="true" style="margin: 0px; position: absolute; width: 125px; height: 40px; left: 2px; top: 0px; font-weight: 600; line-height: 40px; color: #2F2F2F;">
+								<i class="fa fa-calendar fa-stack-1x" style="position: absolute; top: -0.5px; left: 92px; width: 20px; height: 20px; cursor: pointer; color: #2F2F2F; z-index: 2; font-size: 16px;" data-toggle></i>
+								<input class="D3" data-input style="position: absolute; width: 115px; height: 30px; border-radius: 5px;padding-left: 5px; text-align: left; left: 2px; top: 5px; border-width: 0px;box-shadow: 1px 1px 5px rgba(211,211,211), -1px -1px 5px rgba(211,211,211);">
+							</p>
+							<p style="margin: 0px; position: absolute; width: 150px; height: 40px; left: 118px; top: 0px; font-weight: 600; line-height: 40px; color: #2F2F2F;">
+								<input id="time1" class=flatpickr data-enable-time=true data-enable-seconds=true data-no-calendar=true value="08:00:00" data-time_24hr=true style="width: 63px; height: 30px; border-radius: 5px; text-align: left; margin-left: 5px;border-width: 0px;box-shadow: 1px 1px 5px rgba(211,211,211), -1px -1px 5px rgba(211,211,211);">
+								~
+								<input id="time2" class=flatpickr data-enable-time=true data-enable-seconds=true data-no-calendar=true value="08:00:00" data-time_24hr=true style="width: 63px; height: 30px; border-radius: 5px; text-align: left; border-width: 0px;box-shadow: 1px 1px 5px rgba(211,211,211), -1px -1px 5px rgba(211,211,211); ">
+							</p>
+							<p id="reloadbt" class="bujuSameq" style="left: 272px; height: 33px; width: 60px; top: 3px; text-align: center; line-height: 33px; background: #6483B2;">Action</p>
+						</div>
+						<div style="position: absolute; width: 240px; top: 0px; left: 92px; height: 30px;   border-top-right-radius: 5px; border-top-left-radius: 5px; background: white;">
+							<b style="position: absolute; left: 25px; top: 5px; font-size: 14px; font-family: georgia; color: #5E6268;">Flow Animation</b>
+							<i id="" class="fa fa-bookmark fa-stack-1x" style="position: absolute; top: 5px; left: 0px; width: 20px; height: 20px; color: #5E6268;"></i>
+						</div>
+					</div>
+				</div>
+				<div id="buju2">
+					<div id="title_svg" style="position: absolute; width: 100%; height: 30px; background-color: #F8F8F8; border: 2px solid #C3C3C3; border-top-width: 0px; border-bottom-width: 0;">
+						<!--<div id="show_road_icon" style="position: absolute; width: 115px; top: 4px; right: 72px;">
+							<p style="position: absolute; font-size: 13px; font-weight: 700; margin-top: 3.5px; color: #5E6268; width: 74px;">Show Road</p>
+							<i id="show_R" class="switch-off" themeColor="red" style="float: right; margin-top: 1px;"></i>
+						</div>-->
+						<!--<p style="text-align: center; border-radius: 6px; box-shadow: 0px 0px 5px rgba(211,211,211); margin: 0px; position: absolute; width: 38px; height: 25px; top: 2px; right: 9px; cursor: pointer;" id="cli_chart">
+							<i class="fa fa-bar-chart fa-2x" aria-hidden="true" style="color: #5E6268; margin: 3px 0px 0px 1px; font-size: 20px;"></i>
+						</p>-->
+						<p style="position: absolute; font-size: 14px; font-weight: 700; top: 5.5px; left: 487px; color: #5E6268; width: 150px; font-family: georgia;">
+							
+						</p>
+					</div>
+					<div id="body_svg" style="position: absolute; width: 1125px; height: 282px; top: 30px; left: 2px; border: 2px solid #C3C3C3; border-bottom-right-radius: 3px; overflow-y: auto;">
+						<p id="cli_chart" style="position: absolute; top: 17px; left: 525px; width: 30px; height: 30px; display: none; z-index: 999;">
+							<img src="img/cbm.png" style=""/>
+						</p>
+						<div id="hdiv" style="position: absolute; width: 493px; height: 235px; left: 14px; top: 16px; background-color: white; overflow-y: auto;"></div>
+						<div id="hdiv1" style="position: absolute; width: 493px; height: 235px; left: 574px; top: 16px; background-color: white; overflow-y: auto;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
