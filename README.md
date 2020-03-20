@@ -5,3 +5,5 @@
 * 后端进入backend中python runserver manage.py 8000
 ## 系统界面
 ![Image text](https://github.com/dongshixu/A-predictive-visual-analysis-system-for-taxi-travel-law/blob/master/img/system_interface.png)
+## 关于数据
+可联系prxudongshi@foxmail.com获取！
